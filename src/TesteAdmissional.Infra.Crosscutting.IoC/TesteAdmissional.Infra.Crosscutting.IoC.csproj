@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\TesteAdmissional.Infra.Bus\TesteAdmissional.Infra.Bus.csproj" />
+      <ProjectReference Include="..\TesteAdmissional.Infra.Data\TesteAdmissional.Infra.Data.csproj" />
+      <ProjectReference Include="..\TesteAdmissional.Infra.Facade\TesteAdmissional.Infra.Facade.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjectionFixed" Version="5.1.2" />
+      <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    </ItemGroup>
+
+</Project>
