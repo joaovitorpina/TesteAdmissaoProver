@@ -54,6 +54,27 @@ public class LoginControllerTest
         Assert.IsAssignableFrom<ObjectResult>(result);
         var errorResult = result as ObjectResult;
 
+        Assert.Equal(400, errorResult?.StatusCode);
+    }
+    
+    [Fact]
+    public void Login_Deve_Retornar_InternalServerError_Quando_KeyKeeper_Retornar_Excecao()
+    {
+        var loginConfig = new Mock<IOptions<LoginConfig>>();
+        var keyKeeper = new Mock<ITesteAdmissionalAuthKeyKeeper>();
+
+        loginConfig.Setup(l => l.Value).Returns(new LoginConfig { User = "usuario", Password = "senha" });
+        keyKeeper.Setup(k => k.CreateNewToken()).Throws<Exception>();
+
+        var loginController = new LoginController(loginConfig.Object, keyKeeper.Object);
+
+        var request = new LoginRequest("usuario", "senha");
+
+        var result = loginController.Login(request);
+
+        Assert.IsAssignableFrom<ObjectResult>(result);
+        var errorResult = result as ObjectResult;
+
         Assert.Equal(500, errorResult?.StatusCode);
     }
 }
