@@ -5,5 +5,4 @@ namespace TesteAdmissional.Application.Queries;
 
 public class ListContatoQuery : IRequest<List<Contato>>
 {
-    
 }

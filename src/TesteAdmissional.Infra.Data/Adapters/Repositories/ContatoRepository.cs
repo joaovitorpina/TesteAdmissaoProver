@@ -30,10 +30,7 @@ public class ContatoRepository : IContatoRepository
     {
         var contato = await _context.Contatos.FirstOrDefaultAsync(c => c.Id == id);
 
-        if (contato is null)
-        {
-            return;
-        }
+        if (contato is null) return;
 
         _context.Contatos.Remove(contato);
         await _context.SaveChangesAsync();

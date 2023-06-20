@@ -7,14 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="AWSSDK.SQS" Version="3.7.103.4" />
-      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0" />
+        <PackageReference Include="AWSSDK.SQS" Version="3.7.103.4"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TesteAdmissional.Application\TesteAdmissional.Application.csproj" />
-      <ProjectReference Include="..\TesteAdmissional.Infra.Environment\TesteAdmissional.Infra.Environment.csproj" />
+        <ProjectReference Include="..\TesteAdmissional.Application\TesteAdmissional.Application.csproj"/>
+        <ProjectReference Include="..\TesteAdmissional.Infra.Environment\TesteAdmissional.Infra.Environment.csproj"/>
     </ItemGroup>
 
 </Project>

@@ -10,10 +10,10 @@ namespace TesteAdmissional.Api.Controllers;
 [ApiController]
 public class LoginController : ApiController
 {
+    private readonly ITesteAdmissionalAuthKeyKeeper _keyKeeper;
     private readonly IOptions<LoginConfig> _loginConfig;
-    private readonly TesteAdmissionalAuthKeyKeeper _keyKeeper;
 
-    public LoginController(IOptions<LoginConfig> loginConfig, TesteAdmissionalAuthKeyKeeper keyKeeper)
+    public LoginController(IOptions<LoginConfig> loginConfig, ITesteAdmissionalAuthKeyKeeper keyKeeper)
     {
         _loginConfig = loginConfig;
         _keyKeeper = keyKeeper;
@@ -28,9 +28,7 @@ public class LoginController : ApiController
         try
         {
             if (request.User != _loginConfig.Value.User || request.Password != _loginConfig.Value.Password)
-            {
                 return BadRequest(Error("Usuario ou senha estao invalidos"));
-            }
 
             var token = _keyKeeper.CreateNewToken();
 
@@ -41,7 +39,7 @@ public class LoginController : ApiController
             return StatusCode(StatusCodes.Status500InternalServerError, Error(e.Message));
         }
     }
-    
+
     [HttpPost("[action]")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<string>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse<string>))]
@@ -50,10 +48,7 @@ public class LoginController : ApiController
     {
         try
         {
-            if (request.User != _loginConfig.Value.User)
-            {
-                return BadRequest(Error("Usuario nao existente"));
-            }
+            if (request.User != _loginConfig.Value.User) return BadRequest(Error("Usuario nao existente"));
 
             var token = _keyKeeper.CreateTokenPasswordRecovery();
 
@@ -64,7 +59,7 @@ public class LoginController : ApiController
             return StatusCode(StatusCodes.Status500InternalServerError, Error(e.Message));
         }
     }
-    
+
     [HttpPost("[action]")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<string>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse<string>))]
@@ -73,11 +68,8 @@ public class LoginController : ApiController
     {
         try
         {
-            if (_keyKeeper.CheckTokenIsValid(request.Token))
-            {
-                return BadRequest(Error("Token invalido"));
-            }
-            
+            if (_keyKeeper.CheckTokenIsValid(request.Token)) return BadRequest(Error("Token invalido"));
+
             return Ok(Success(string.Empty));
         }
         catch (Exception e)

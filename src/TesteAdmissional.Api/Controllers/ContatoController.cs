@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TesteAdmissional.Api.Controllers.Dtos;
 using TesteAdmissional.Application.Commands;
-using TesteAdmissional.Application.QuerieHandlers;
 using TesteAdmissional.Application.Queries;
 
 namespace TesteAdmissional.Api.Controllers;
@@ -19,7 +18,7 @@ public class ContatoController : ApiController
     {
         _mediator = mediator;
     }
-    
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<string>))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorResponse<string>))]
@@ -27,7 +26,8 @@ public class ContatoController : ApiController
     {
         try
         {
-            await _mediator.Send(new CreateContatoCommand(request.Nome, request.Telefone, request.DataNascimento, request.Sexo, request.Cargo));
+            await _mediator.Send(new CreateContatoCommand(request.Nome, request.Telefone, request.DataNascimento,
+                request.Sexo, request.Cargo));
 
             return Ok(Success("Contato criado com sucesso!"));
         }
@@ -44,7 +44,8 @@ public class ContatoController : ApiController
     {
         try
         {
-            await _mediator.Send(new UpdateContatoCommand(request.Id, request.Nome, request.Telefone, request.Sexo, request.Cargo, request.DataNascimento));
+            await _mediator.Send(new UpdateContatoCommand(request.Id, request.Nome, request.Telefone, request.Sexo,
+                request.Cargo, request.DataNascimento));
 
             return Ok(Success("Contato atualizado com sucesso!"));
         }
@@ -53,7 +54,7 @@ public class ContatoController : ApiController
             return StatusCode(StatusCodes.Status500InternalServerError, Error(e.Message));
         }
     }
-    
+
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<string>))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorResponse<string>))]
@@ -70,7 +71,7 @@ public class ContatoController : ApiController
             return StatusCode(StatusCodes.Status500InternalServerError, Error(e.Message));
         }
     }
-    
+
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<string>))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorResponse<string>))]

@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Amazon.SQS;
 using Amazon.SQS.Model;
 using Microsoft.Extensions.Options;
@@ -20,7 +19,7 @@ public class SqsFacade : ISqsFacade
 
     public async Task SendMessage(string body)
     {
-        var request = new SendMessageRequest()
+        var request = new SendMessageRequest
         {
             MessageBody = body,
             QueueUrl = _config.Value.SQSUrl

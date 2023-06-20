@@ -10,12 +10,12 @@ public class Cargo : ValueObject
         Ativo = true;
     }
 
+    public string Descricao { get; }
+    public bool Ativo { get; set; }
+
     protected override IEnumerable<object?> GetEqualityComponents()
     {
         yield return Descricao;
         yield return Ativo;
     }
-    
-    public string Descricao { get; }
-    public bool Ativo { get; set; }
 }

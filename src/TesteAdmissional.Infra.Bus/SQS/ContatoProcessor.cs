@@ -14,32 +14,32 @@ namespace TesteAdmissional.Infra.Bus.SQS;
 
 public class ContatoProcessor : BackgroundService
 {
-    private readonly IOptions<AmazonSQSConfig> _sqsConfig;
     private readonly IContatoRepository _contatoRepository;
+    private readonly IOptions<AmazonSQSConfig> _sqsConfig;
 
     public ContatoProcessor(IOptions<AmazonSQSConfig> sqsConfig, IContatoRepository contatoRepository)
     {
         _sqsConfig = sqsConfig;
         _contatoRepository = contatoRepository;
     }
-    
+
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         Console.WriteLine("Contato Processor starting up");
 
         var client = new AmazonSQSClient();
-        
+
         while (!stoppingToken.IsCancellationRequested)
         {
-            var request = new ReceiveMessageRequest()
+            var request = new ReceiveMessageRequest
             {
                 QueueUrl = _sqsConfig.Value.SQSUrl
             };
-            
+
             var response = await client.ReceiveMessageAsync(request, stoppingToken);
-            
-            foreach (var deserializedBody in response.Messages.Select(message => JsonSerializer.Deserialize<ContatoSqsMessage>(message.Body)))
-            {
+
+            foreach (var deserializedBody in response.Messages.Select(message =>
+                         JsonSerializer.Deserialize<ContatoSqsMessage>(message.Body)))
                 switch (deserializedBody!.MessageType)
                 {
                     case MessageType.Create:
@@ -57,9 +57,8 @@ public class ContatoProcessor : BackgroundService
                     default:
                         throw new ArgumentOutOfRangeException(nameof(deserializedBody.MessageType));
                 }
-            }
         }
-        
+
         Console.WriteLine("Contato Processor turning off");
     }
 

@@ -8,7 +8,7 @@ using TesteAdmissional.Infra.Crosscutting.IoC.Configuration.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<TesteAdmissionalAuthKeyKeeper>();
+builder.Services.AddSingleton<ITesteAdmissionalAuthKeyKeeper, TesteAdmissionalAuthKeyKeeper>();
 builder.Services.AddAuthentication(options => { options.DefaultScheme = "TesteAdmissao"; })
     .AddScheme<TesteAdmissionalAuthSchemeOptions, TesteAdmissionalAuthHandler>("TesteAdmissao",
         null);

@@ -4,16 +4,17 @@ using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
-using TesteAdmissional.Api.Authentication.Dtos;
 
 namespace TesteAdmissional.Api.Authentication;
 
 public class TesteAdmissionalAuthHandler : AuthenticationHandler<TesteAdmissionalAuthSchemeOptions>
 {
     private readonly TesteAdmissionalAuthKeyKeeper _keyKeeper;
-    
-    public TesteAdmissionalAuthHandler(IOptionsMonitor<TesteAdmissionalAuthSchemeOptions> options, ILoggerFactory logger,
-        UrlEncoder encoder, ISystemClock clock, TesteAdmissionalAuthKeyKeeper testeAdmissionalAuthKeyKeeper) : base(options, logger, encoder, clock)
+
+    public TesteAdmissionalAuthHandler(IOptionsMonitor<TesteAdmissionalAuthSchemeOptions> options,
+        ILoggerFactory logger,
+        UrlEncoder encoder, ISystemClock clock, TesteAdmissionalAuthKeyKeeper testeAdmissionalAuthKeyKeeper) : base(
+        options, logger, encoder, clock)
     {
         _keyKeeper = testeAdmissionalAuthKeyKeeper;
     }
@@ -34,14 +35,11 @@ public class TesteAdmissionalAuthHandler : AuthenticationHandler<TesteAdmissiona
         {
             var validToken = _keyKeeper.CheckTokenIsValid(token);
 
-            if (!validToken)
-            {
-                return AuthenticateResult.Fail("Invalid token");
-            }
+            if (!validToken) return AuthenticateResult.Fail("Invalid token");
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, token),
+                new Claim(ClaimTypes.NameIdentifier, token)
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, nameof(TesteAdmissionalAuthHandler));

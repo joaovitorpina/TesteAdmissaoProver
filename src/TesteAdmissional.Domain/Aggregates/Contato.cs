@@ -8,7 +8,8 @@ public class Contato : Entity, IAggregateRoot
 {
     private DateOnly _dataNascimento;
 
-    public Contato(string nome, string telefone, DateOnly dataNascimento, Sexo sexo, Cargo cargo, Guid? id = null, DateTime? createdAt = null, DateTime? updatedAt = null) : base(id, createdAt, updatedAt)
+    public Contato(string nome, string telefone, DateOnly dataNascimento, Sexo sexo, Cargo cargo, Guid? id = null,
+        DateTime? createdAt = null, DateTime? updatedAt = null) : base(id, createdAt, updatedAt)
     {
         Nome = nome;
         Telefone = telefone;
@@ -16,9 +17,10 @@ public class Contato : Entity, IAggregateRoot
         Sexo = sexo;
         Cargo = cargo;
     }
-    
+
     public string Nome { get; set; }
     public string Telefone { get; set; }
+
     public DateOnly DataNascimento
     {
         get => _dataNascimento;
@@ -30,6 +32,7 @@ public class Contato : Entity, IAggregateRoot
             Idade = GerarIdade(value);
         }
     }
+
     public int Idade { get; set; }
     public Sexo Sexo { get; set; }
     public bool Ativo { get; set; }

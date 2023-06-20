@@ -6,7 +6,6 @@ namespace TesteAdmissional.Infra.Data;
 
 public class TesteAdmissionalContext : DbContext
 {
-
     public TesteAdmissionalContext(DbContextOptions<TesteAdmissionalContext> options) : base(options)
     {
     }
@@ -22,7 +21,7 @@ public class TesteAdmissionalContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new ContatoEntityTypeConfiguration());
-        
+
         base.OnModelCreating(modelBuilder);
     }
 }
